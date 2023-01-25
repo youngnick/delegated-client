@@ -16,6 +16,4 @@ FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=build-env /go/src/delegated-client/dclient .
 COPY --from=build-env /go/src/delegated-client/sclient .
-# Use uid of nonroot user (65532) because kubernetes expects numeric user when applying pod security policies
-USER 65532
 ENTRYPOINT ["/dclient"]

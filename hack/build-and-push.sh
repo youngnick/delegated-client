@@ -56,10 +56,10 @@ echo "Building and pushing admission-server image...${BUILDX_PLATFORMS}"
 # And, we add an extra version tag - either :latest or semver.
 # The buildx integrate build and push in one line.
 docker buildx build \
-    -t ${REGISTRY}/delegated-client:${GIT_TAG} \
-    -t ${REGISTRY}/delegated-client:${VERSION_TAG} \
+    -t "${REGISTRY}/delegated-client:${GIT_TAG}" \
+    -t "${REGISTRY}/delegated-client:${VERSION_TAG}" \
     --build-arg "COMMIT=${COMMIT}" \
     --build-arg "TAG=${BINARY_TAG}" \
-    --platform ${BUILDX_PLATFORMS} \
+    --platform "${BUILDX_PLATFORMS}" \
     --push \
     .

@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
 	"log"
 	"os"
+	"os/user"
 	"strings"
 	"time"
 
@@ -34,7 +36,7 @@ func main() {
 	if len(selectors) == 0 {
 		log.Fatal("Must include at least one selector")
 		}
-		
+
 	for _, selector := range selectors {
 		colonCount := strings.Count(selector, ":")
 		if colonCount == 0 {
@@ -42,6 +44,24 @@ func main() {
 		}
 	}
 
+	currentUser, err := user.Current()
+	if err != nil {
+		log.Fatalf("Couldn't get current user info: %s", err)
+	}
+
+	username := currentUser.Username
+	userid := currentUser.Uid
+
+
+	log.Printf("Running as user %s, uid %s", username, userid)
+
+	selectorsJson, err := json.MarshalIndent(selectors, "", "  ")
+	if err != nil {
+		log.Fatalf("Couldn't marshal selectors into JSON: %s", err)
+	}
+
+	log.Printf("Selectors: %s", selectorsJson)
+	
 	firstTime := true
 
 	if _, err := os.Stat(socketPath); errors.Is(err, os.ErrNotExist) {
@@ -114,7 +134,6 @@ func InitWatcher(sockPath string, selectbase ...string) (delegatedidentityv1.Del
 		})
 	}
 
-	fmt.Printf("Selectors\n:%#v\n", selectors)
 
 	req := &delegatedidentityv1.SubscribeToX509SVIDsRequest{
 		Selectors: selectors,

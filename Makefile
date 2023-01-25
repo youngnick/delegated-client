@@ -1,6 +1,6 @@
 # These are overridden by cloudbuild.yaml when run by Prow.
 
-export REGISTRY ?= youngnick/delegated-client
+export REGISTRY ?= youngnick
 
 
 # Prow gives this a value of the form vYYYYMMDD-hash.
