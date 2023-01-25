@@ -1,3 +1,5 @@
+// dclient uses the SPIFFE admin socket and DelegatedIdentity API to watch all SPIFFE IDs
+// that match a subset of the given selectors.
 package main
 
 import (

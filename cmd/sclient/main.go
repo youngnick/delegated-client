@@ -1,3 +1,5 @@
+// sclient connects to the SPIRE agent and watches whatever SPIFFE IDs it gets
+// issued.
 package main
 
 import (
